@@ -1,7 +1,9 @@
 open import Data.Product using (_×_; proj₁; proj₂) renaming (_,_ to ⟨_,_⟩)
-open import Data.Sum using (_⊎_; inj₁; inj₂) renaming ([_,_] to case-⊎)
-open import Agda.Builtin.Equality using (_≡_; refl)
+open import Data.Sum using (_⊎_; inj₁; inj₂)
+open import Relation.Binary.PropositionalEquality using (_≡_; refl; cong)
 open import Data.Bool using (Bool; true; false)
+open import Relation.Nullary.Negation using (contradiction)
+open import Data.Bool.Properties using (not-¬)
 
 open import Identifier using (Id)
 open import Arith using (Aexp; 𝓐〚_〛_)
@@ -51,3 +53,24 @@ data _⟶_ : Stm × State → (Stm ⊎ Done) × State → Set where
 
     while : ∀ {b S s}
           → ⟨ while b perform S , s ⟩ ⟶ ⟨ inj₁ (if b then (S ﹔ while b perform S) else skip) , s ⟩
+
+deterministic : ∀ {A B B′}
+              → A ⟶ B
+              → A ⟶ B′
+              → B ≡ B′
+deterministic ass          ass           = refl
+deterministic skip         skip          = refl
+deterministic (comp₁ A⟶B) (comp₁ A⟶B′) with deterministic A⟶B A⟶B′
+... | ind rewrite cong proj₂ ind         with cong proj₁ ind
+... | refl                               = refl
+deterministic (comp₁ ())   (comp₂ ass)
+deterministic (comp₁ ())   (comp₂ skip)
+deterministic (comp₂ ass)  (comp₂ ass)   = refl
+deterministic (comp₂ skip) (comp₂ skip)  = refl
+deterministic (if⊤ _)      (if⊤ _)       = refl
+deterministic (if⊤ x)      (if⊥ y)       rewrite x
+                                         = contradiction refl (not-¬ y)
+deterministic (if⊥ x)      (if⊤ y)       rewrite x
+                                         = contradiction refl (not-¬ y)
+deterministic (if⊥ _)      (if⊥ _)       = refl
+deterministic while        while         = refl
