@@ -1,5 +1,3 @@
-module Core.SmallStep where
-
 open import Data.Product using (_×_; proj₁; proj₂) renaming (_,_ to ⟨_,_⟩)
 open import Data.Sum using (_⊎_; inj₁; inj₂)
 open import Data.Sum.Properties using (inj₁-injective)
@@ -12,6 +10,8 @@ open import Core.Statement using (Stm; _≔_; skip; _﹔_; if_then_else_; while_
 open import Core.State using (State; _[_↦_])
 open import Core.Arith using (𝓐〚_〛_)
 open import Core.Bool using (𝓑〚_〛_)
+
+module Core.SmallStep where
 
 data Done : Set where
     done : Done

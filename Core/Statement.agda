@@ -1,9 +1,8 @@
-module Core.Statement where
-
 open import Core.Identifier using (Id)
 open import Core.Arith using (Aexp; 𝓐〚_〛_)
 open import Core.Bool using (Bexp; 𝓑〚_〛_)
 
+module Core.Statement where
 
 infixr 9 _﹔_
 data Stm : Set where

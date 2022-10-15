@@ -1,5 +1,3 @@
-module Core.Arith where
-
 open import Data.Integer using (ℤ) renaming (_+_ to _ℤ+_)
 open import Data.Sum using (_⊎_; inj₁; inj₂)
 open import Relation.Nullary using (Dec; yes; no)
@@ -8,6 +6,8 @@ open import Relation.Nullary using (¬_)
 
 open import Core.Identifier using (Id; _≟_)
 open import Core.State using (State; insert≡; insert¬≡) renaming (_[_↦_] to _s[_↦_])
+
+module Core.Arith where
 
 infix 10 `_ ℤ_
 
