@@ -32,13 +32,13 @@ data Aexp : Set where
 infix 1 _∋_
 
 data _∋_ : Aexp → Id → Set where
-    H : ∀ {id : Id} → ` id ∋ id
+    H : ∀ {id} → ` id ∋ id
 
-    T+ : ∀ {a₁ a₂ : Aexp} {id : Id}
+    T+ : ∀ {a₁ a₂ id}
        → (a₁ ∋ id) ⊎ (a₂ ∋ id) → a₁ + a₂ ∋ id
-    T* : ∀ {a₁ a₂ : Aexp} {id : Id}
+    T* : ∀ {a₁ a₂ id}
        → (a₁ ∋ id) ⊎ (a₂ ∋ id) → a₁ * a₂ ∋ id
-    T- : ∀ {a₁ a₂ : Aexp} {id : Id}
+    T- : ∀ {a₁ a₂ id}
        → (a₁ ∋ id) ⊎ (a₂ ∋ id) → a₁ - a₂ ∋ id
 
 _∋?_ : (a : Aexp) → (id : Id) → Dec (a ∋ id)
@@ -64,7 +64,7 @@ _∋?_ : (a : Aexp) → (id : Id) → Dec (a ∋ id)
 
 weakstate : (a : Aexp)
           → (s s' : State)
-          → (∀ {id : Id} → a ∋ id → s id ≡ s' id)
+          → (∀ {id} → a ∋ id → s id ≡ s' id)
           → 𝓐〚 a 〛 s ≡ 𝓐〚 a 〛 s'
 weakstate (` x)     s s' p = p H
 weakstate (ℤ x)     s s' p = refl
@@ -90,7 +90,7 @@ _[_↦_] : Aexp → Id → Aexp → Aexp
 (a₁ - a₂) [ y ↦ a₀ ] = a₁ [ y ↦ a₀  ] - a₂ [ y ↦ a₀ ]
 (a₁ * a₂) [ y ↦ a₀ ] = a₁ [ y ↦ a₀  ] * a₂ [ y ↦ a₀ ]
 
-subst≡ : ∀ (a a₀ : Aexp) → (s : State) → (y : Id)
+subst≡ : (a a₀ : Aexp) → (s : State) → (y : Id)
        → 𝓐〚 a [ y ↦ a₀ ] 〛 s ≡ 𝓐〚 a 〛 (s s[ y ↦ 𝓐〚 a₀ 〛 s ])
 subst≡ (` x)     a₀ s y with x ≟ y
 ...                     | yes refl rewrite insert≡  s x       (𝓐〚 a₀ 〛 s)
