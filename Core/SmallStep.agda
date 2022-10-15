@@ -1,3 +1,5 @@
+module Core.SmallStep where
+
 open import Data.Product using (_×_; proj₁; proj₂) renaming (_,_ to ⟨_,_⟩)
 open import Data.Sum using (_⊎_; inj₁; inj₂)
 open import Data.Sum.Properties using (inj₁-injective)
@@ -6,22 +8,10 @@ open import Data.Bool using (Bool; true; false)
 open import Relation.Nullary.Negation using (contradiction)
 open import Data.Bool.Properties using (not-¬)
 
-open import Identifier using (Id)
-open import Arith using (Aexp; 𝓐〚_〛_)
-open import Bool using (Bexp; 𝓑〚_〛_)
-open import State using (State; _[_↦_])
-
-
-infixr 9 _﹔_
-data Stm : Set where
-
-    _≔_  : Id → Aexp → Stm
-    skip : Stm
-
-    _﹔_ : Stm → Stm → Stm
-
-    if_then_else_  : Bexp → Stm → Stm → Stm
-    while_perform_ : Bexp → Stm → Stm
+open import Core.Statement using (Stm; _≔_; skip; _﹔_; if_then_else_; while_perform_)
+open import Core.State using (State; _[_↦_])
+open import Core.Arith using (𝓐〚_〛_)
+open import Core.Bool using (𝓑〚_〛_)
 
 data Done : Set where
     done : Done

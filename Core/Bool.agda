@@ -1,9 +1,11 @@
+module Core.Bool where
+
 open import Data.Bool using (Bool; true; false; not) renaming (_∧_ to _b∧_)
 open import Data.Integer using (_≟_; _≤?_)
 open import Relation.Nullary using (Dec; yes; no)
 
-open import State using (State)
-open import Arith using (Aexp; 𝓐〚_〛_)
+open import Core.State using (State)
+open import Core.Arith using (Aexp; 𝓐〚_〛_)
 
 infix 10 𝔹_
 infix  4 _≤_ _≐_

@@ -1,11 +1,13 @@
+module Core.State where
+
 open import Data.Integer using (ℤ)
 open import Relation.Nullary using (yes; no)
-open import Agda.Builtin.Equality using (_≡_; refl)
+open import Relation.Binary.PropositionalEquality using (_≡_; refl)
 open import Relation.Nullary.Negation using (contradiction)
 open import Relation.Nullary using (¬_)
 open import Data.Empty using (⊥-elim)
 
-open import Identifier using (Id; _≟_)
+open import Core.Identifier using (Id; _≟_)
 
 State : Set
 State = Id → ℤ
