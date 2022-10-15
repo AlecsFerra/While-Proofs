@@ -1,4 +1,5 @@
-open import Data.Integer using (ℤ) renaming (_+_ to _ℤ+_)
+open import Data.Integer using (ℤ) renaming (
+   _+_ to _ℤ+_; _-_ to _ℤ-_; _*_ to _ℤ*_)
 open import Data.Sum using (_⊎_; inj₁; inj₂)
 open import Relation.Nullary using (Dec; yes; no)
 open import Relation.Binary.PropositionalEquality using (_≡_; refl)
@@ -26,8 +27,8 @@ data Aexp : Set where
 𝓐〚 ` x 〛     s = s x
 𝓐〚 ℤ n 〛     s = n
 𝓐〚 a₁ + a₂ 〛 s = 𝓐〚 a₁ 〛 s ℤ+ 𝓐〚 a₂ 〛 s
-𝓐〚 a₁ - a₂ 〛 s = 𝓐〚 a₁ 〛 s ℤ+ 𝓐〚 a₂ 〛 s
-𝓐〚 a₁ * a₂ 〛 s = 𝓐〚 a₁ 〛 s ℤ+ 𝓐〚 a₂ 〛 s
+𝓐〚 a₁ - a₂ 〛 s = 𝓐〚 a₁ 〛 s ℤ- 𝓐〚 a₂ 〛 s
+𝓐〚 a₁ * a₂ 〛 s = 𝓐〚 a₁ 〛 s ℤ* 𝓐〚 a₂ 〛 s
 
 infix 1 _∋_
 
